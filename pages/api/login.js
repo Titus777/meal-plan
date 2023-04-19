@@ -11,13 +11,13 @@ export default async function handler(req, res){
 
     await dbConnect();
     try{
-        if(!req.body){
+        if(!req.query){
             res.status(404).end('Error')
             return
         }
-        console.log(req.body)
-        const {email, password} = req.body
-        if(req.method === `POST`){
+    
+        const {email, password} = req.query
+        if(req.method === `GET`){
             hash(password, 10, async function(err,hash){
      
                 
