@@ -12,12 +12,8 @@ export default async function handler(req,res){
     }
     try{
        
-        const {email,details} = req.body
-        console.log(details)
-        const data = await User.findOneAndUpdate({email: email},{details: details})
-
-        res.status(200).send("Updated!")
-
+        console.log("I have made it)
+        res.status(200).send("yes")
 
     }catch(e){
         console.error(e)
