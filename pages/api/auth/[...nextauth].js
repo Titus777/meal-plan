@@ -42,7 +42,7 @@ export const authOptions= {
           headers: {"Content-Type":"application/json"},
           body: JSON.stringify({credentials}),
         })
-        console.log(response)
+        
         let user = await response.json()
 
         if(response.status == 422){
