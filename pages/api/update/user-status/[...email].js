@@ -12,8 +12,8 @@ export default async function handler(req,res){
     try{
         const {email} = req.query
         const response = await User.findOneAndUpdate({email: email[0]},{new:false},{rawResults:true})
-        console.log(email,response)
-        if(response.modifiedCount == 1){
+     
+        if(response){
             res.status(200).json(response)
             return
         }else{
