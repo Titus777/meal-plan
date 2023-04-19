@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
+import {useRouter} from 'next/router'
 
 function JournalForm(props) {
   const [done, setDone] = useState(false);
   const { data: session } = useSession();
+  const router = useRouter()
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -17,19 +19,38 @@ function JournalForm(props) {
       email: session?.user?.email,
       calorie_journal: [{ fats, carbohydrates, protein, number_of_meals }],
     };
+
+    console.log(fats)
+    if (parseInt(fats) + parseInt(carbohydrates) + parseInt(protein) == 100) {
+
+      if(props?.isUpdating){
+        const toSend = {email:session?.email,details:sendDetails}
+        const res = await fetch("/api/crud/journal/change-macros", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(toSend),
+        });
+
+        if(res.status == 200){
+          router.push("/tracker")
+          return
+        }
+        return
+      }else{
+
+        const res = await fetch("/api/update/create-journal", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(sendDetails),
+        });
   
-    const res = await fetch("/api/update/create-journal", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(sendDetails),
-    });
-    
-    if(props?.setJournalStatus){
-      if (res.status == 200) {
-        props.setJournalStatus(true);
+        if (props?.setJournalStatus) {
+          if (res.status == 200) {
+            props.setJournalStatus(true);
+          }
+        }
       }
     }
-    
   }
 
   return (

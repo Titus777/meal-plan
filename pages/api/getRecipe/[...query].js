@@ -5,9 +5,10 @@ const queryStrings = {
 
 export default async function handler(req,res){
     const {edman_id,edman_keys} = queryStrings
-    
+
     try{
-        const data = await fetch(`https://api.edamam.com/api/recipes/v2?type=public&q=${req.query.query}&app_id=${edman_id}&app_key=${edman_keys}`)
+     
+        const data = await fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.SPOO_KEY}&query=${req?.query?.query}&addRecipeNutrition=true&addRecipeInformation&number=100`)
    
         res.status(200).json(await data.json())
     }catch(e){

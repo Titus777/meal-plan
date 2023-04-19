@@ -47,7 +47,7 @@ export default function Home({ isConnected }) {
   if(session?.isNewUser && typeof window !="undefined"){
     router.push("/form")
   }
-  console.log(session)
+
   
   return (
     <div data-theme="lemonade">

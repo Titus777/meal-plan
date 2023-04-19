@@ -6,8 +6,7 @@ import CalendarNotes from "../Forms/CalendarNotes";
 function CalendarComponent({recipes,journal}) {
   const [date, setDate] = useState(new Date());
   const [popUp, setPopUp] = useState(false);
-  const value = "this mojo"
-
+  
   return (
     <div className="flex justify-center card bg-slate-200 border-4 rounded-md h-fit">
       <div className="">
@@ -20,7 +19,7 @@ function CalendarComponent({recipes,journal}) {
             <div className="flex flex-col justify-center items-center">
               <div className="w-fit">
                 <div className="w-full h-fit rounded bg-primary text-secondary-content place-content-center">
-                  <CalendarNotes recipes={recipes} />
+                  <CalendarNotes journal={journal} date={date.toDateString()} />
                 </div>
               </div>
             </div>

@@ -9,10 +9,11 @@ import { useRouter } from "next/router";
 import { getSession, useSession } from "next-auth/react";
 import Journal from "../common/model/Journal";
 import JournalForm from "../common/components/Forms/JournalForm";
+import User from "../common/model/User"
 
 
 
-function Tracker({journal,isConnected, isNewUser}) {
+function Tracker({user,journal,isConnected, isNewUser}) {
   const router = useRouter()
   console.log("I am ehre")
   if(isNewUser && typeof window !="undefined"){
@@ -27,7 +28,7 @@ function Tracker({journal,isConnected, isNewUser}) {
       <div className="flex flex-col w-full min-h-screen bg-base-200">
         <CalorieJournal journal={journal} />
         <div className="divider divider-vertical"></div>
-        <MacroTracker journal={journal} />
+        <MacroTracker user={user} journal={journal} />
         <div className="divider divider-vertical"></div>
         <NutrientTracker journal={journal}/>
       </div>
@@ -51,9 +52,10 @@ export async function getServerSideProps(context) {
     // Then you can execute queries against your database like so:
     // db.find({}) or any of the MongoDB Node Driver commands
     const journal = await Journal.findOne({email:ctx?.user?.email})
+    const user = await User.findOne({email:ctx?.user?.email})
   
     return {
-      props: { isConnected: true, journal: JSON.parse(JSON.stringify(journal)), isNewUser: ctx.isNewUser},
+      props: { isConnected: true, journal: JSON.parse(JSON.stringify(journal)), isNewUser: ctx.isNewUser, user: JSON.parse(JSON.stringify(user))},
     };
   } catch (e) {
     console.error(e);

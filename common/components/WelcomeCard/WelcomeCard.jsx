@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import {useRouter} from 'next/router'
 
 function WelcomeCard() {
+  const [query,setQuery] = useState()
+  const router = useRouter()
+  console.log(query)
+  const search = () =>{
+    console.log("here")
+    if(query){
+      router.push({pathname:"/search",query:{query:query}})
+    }else{
+      alert("Please type any word into the recipe searcher")
+    }
+  }
   return (
     <div
       className="hero min-h-screen"
@@ -16,10 +28,11 @@ function WelcomeCard() {
             <input
               type="text"
               placeholder="Search Recipe"
+              onChange={(e) =>setQuery(e.target.value)}
               className="input input-bordered input-accent w-full max-w-xs font-bold"
             />
           </p>
-          <button className="btn btn-primary">Search Delicous Recipes!</button>
+          <button className="btn btn-primary" onClick={search}>Search Delicous Recipes!</button>
           
         </div>
       </div>

@@ -27,23 +27,21 @@ function PaginationComp({ itemsPerPage, items, setNext, setNextUrl }) {
   // following the API or data you're working with.
 
   const [itemOffset, setItemOffset] = useState(0);
-  const [nextPageUrl,setNextPageUrl] = useState('')
+  const [nextPageUrl,setNextPageUrl] = useState([])
   // Simulate fetching items from another resources.
   // (This could be items from props; or items loaded in a local state
   // from an API endpoint with useEffect and useState)
-  console.log(items)
+
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = items[0]?.hits?.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items[0]?.count / itemsPerPage);
-  console.log(pageCount,itemsPerPage);
+  const currentItems = items?.results?.slice(itemOffset, endOffset);
+  console.log(items)
+  const pageCount = Math.ceil(items?.totalResults / itemsPerPage);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    setNext(true)
-    console.log(items[0]._links?.next?.href)
-    setNextUrl(items[0]?._links?.next?.href)
-    const newOffset = (event.selected * itemsPerPage) % items.length;
+    const newOffset = (event.selected * itemsPerPage) % items?.number;
+    console.log(newOffset)
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );

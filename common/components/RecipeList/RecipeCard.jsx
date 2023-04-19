@@ -5,49 +5,58 @@ function RecipeCard({ recipe }) {
   const router = useRouter();
   console.log(recipe);
   return (
-    <tr className="flex flex-col">
-      <td className="justify-start h-fit">
-        <figure className="">
-          <img src={recipe?.recipe?.image} alt="Album" />
-        </figure>
-      </td>
-      <td className="justify-center">
-        <h2 className="card-title">{recipe?.recipe?.label}</h2>
-      </td>
-      <td className="">
-        <p className="divider divider-vertical">
-          Author -
-          {!recipe?.recipe?.source ? " Unknown" : recipe?.recipe?.source}
-        </p>
-      </td>
-      <td className="flex flex-row justify-center">
-        <div className="flex-col">
-          <h1 className="text-xl">Calories {Math.floor(recipe?.recipe?.calories)}kcal </h1>
-          <h1 className="text-xl">
-            Carbs{" "}
-            {Math.floor(recipe?.recipe?.totalNutrients?.CHOCDF?.quantity)}{" g"}
-          </h1>
-        
-        </div>
-        <div className="divider divider-horizontal"></div>
-        <div className="flex-col">
-        <h1 className="text-xl">
-            Fats {Math.floor(recipe?.recipe?.totalNutrients?.FAT?.quantity)}{" g"}
-          </h1>
-          <h1 className="text-xl">
-            Protein{" "}
-            {Math.floor(recipe?.recipe?.totalNutrients?.PROCNT?.quantity)}{" g"}
-          </h1>
-        </div>
-      </td>
-      <td className="flex justify-center">
-        <button
-          className="btn"
-          onClick={() => router.push(`/recipe-view/${recipe?.recipe?.url}`)}
-        >
-          See More
-        </button>
-      </td>
+    <tr className="flex flex-col lg:flex-row justify-center bg-yellow-100 card my-6 shadow-2xl">
+       <td className="justify-start item-start self-start h-fit w-1/2">
+          <figure className="">
+            <img src={recipe?.image} className="w-full" alt="Album" />
+          </figure>
+        </td>
+      <div className="flex-row w-1/2">
+        <td className="flex justify-center">
+          <h2 className="card-title">{recipe?.title}</h2>
+        </td>
+        <td className="flex justify-center">
+          <p className="text-lg">Servings {recipe?.servings} and ready in {recipe?.readyInMinutes} minutes</p>
+        </td>
+        <td className="flex justify-center">
+          <p className="divider divider-vertical">
+            Author -
+            {!recipe?.sourceName ? " Unknown" : <a href={recipe?.sourceUrl}>{recipe?.sourceName}</a>}
+          </p>
+        </td>
+        <td className="flex flex-row justify-center ">
+          <div className="flex-col border-2 border-red-400 rounded-md">
+            <h1 className="text-xl mx-2">
+              Calories {Math.floor(recipe?.nutrition?.nutrients[0]?.amount)}kcal{" "}
+            </h1>
+            <h1 className="text-xl mx-2">
+              Carbs{" "}
+              {Math.floor(recipe?.nutrition?.caloricBreakdown?.percentCarbs)}
+              {" g"}
+            </h1>
+          </div>
+          <div className="divider divider-horizontal"></div>
+          <div className="flex-col border-2 rounded-md border-red-400">
+            <h1 className="text-xl mx-2">
+              Fats {Math.floor(recipe?.nutrition?.caloricBreakdown?.percentFat)}
+              {" g"}
+            </h1>
+            <h1 className="text-xl mx-2">
+              Protein{" "}
+              {Math.floor(recipe?.nutrition?.caloricBreakdown?.percentProtein)}
+              {" g"}
+            </h1>
+          </div>
+        </td>
+        <td className="flex justify-center">
+          <button
+            className="btn"
+            onClick={() => {router.push(`/recipe-view/${recipe?.id}`)}}
+          >
+            See More
+          </button>
+        </td>
+      </div>
     </tr>
   );
 }

@@ -4,15 +4,19 @@ import { useEffect } from "react";
 import useFetcher from "../../hooks/useFetcher";
 import { useRef } from "react";
 import { useState } from "react";
+import {useRouter} from "next/router"
 import ReactPaginate from 'react-paginate';
 import PaginationComp from "../PaginationComponent/PaginationComp";
+import useRecipeSearch from "../../hooks/useRecipeSearch";
 
-function RecipeList() {
+function RecipeList({data,user}) {
   const [searchDone, setSearchDone] = useState(false);
   const updatedRecipes = useRef([]);
+  const router = useRouter()
  
   let call = async () => {
-    updatedRecipes.current = await useFetcher("FIND", "RECIPES");
+    
+    
     console.log(updatedRecipes.current);
     if (updatedRecipes) {
       setSearchDone(true);
@@ -22,14 +26,13 @@ function RecipeList() {
   useEffect(() => {
     call();
   }, [searchDone]);
-
   return (
     <div>
       {!searchDone ? (
         <div>Loading.....</div>
       ) : (
         <div>
-         <PaginationComp itemsPerPage={6} items={updatedRecipes.current}/>
+         <PaginationComp itemsPerPage={6} items={data}/>
         </div>
       )}
     </div>
