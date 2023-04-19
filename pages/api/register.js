@@ -26,6 +26,7 @@ export default async function handler(req, res){
         }
     
         const {email, password} = req.body
+        console.log(email, password)
         if(req.method === `POST`){
             hash(password, 10, async function(err,hash){
     
