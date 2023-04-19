@@ -39,7 +39,7 @@ export const authOptions= {
         console.log(credentials.email)
         let response = await fetch(`${process.env.NEXTAUTH_URL}api/register`, {
           method: "POST",
-          body: JSON.stringify(credentials),
+          body: JSON.stringify(credentials.email),
           headers: {"Content-Type":"application/json"}
         })
         console.log(response)
