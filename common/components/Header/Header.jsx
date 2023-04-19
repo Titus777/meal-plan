@@ -50,7 +50,9 @@ function Header() {
             onClick={(e) => {
               e.preventDefault;
               
-              signOut();
+              signOut({
+      callbackUrl: `/`
+    });
             }}
             className="btn"
           >
