@@ -103,8 +103,8 @@ export const authOptions= {
           }
          
         }
-        const register = register()
-        if(register == null){
+        const registered = await register()
+        if(registered == null){
           try{
             if(!credentials){
                 
