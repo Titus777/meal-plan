@@ -2,7 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import Auth0Provider from "next-auth/providers/auth0"
 import CredentialsProvider from "next-auth/providers/credentials";
-import axios from "axios"
+
 // import AppleProvider from "next-auth/providers/apple"
 // import EmailProvider from "next-auth/providers/email"
 
@@ -37,12 +37,13 @@ export const authOptions= {
 
       async authorize(credentials,req){
         console.log("I started")
-        let response = await fetch(`${process.env.NEXTAUTH_URL}/api/register`, {
+        /*let response = await fetch(`${process.env.NEXTAUTH_URL}/api/register`, {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: {"Content-Type":"application/json"}
-        })
-
+        })*/
+        
+        let response = await fetch(`${process.env.NEXTAUTH_URL}/api/register?email=${credentials.email}&password=${credentials.password}`)
         let user = await response.json()
 
         if(response.status == 422){
