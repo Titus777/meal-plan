@@ -12,7 +12,7 @@ export default async function handler(req,res){
     }
     try{
        
-        console.log("I have made it)
+        console.log("I have made it")
         res.status(200).send("yes")
 
     }catch(e){
