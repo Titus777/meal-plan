@@ -36,12 +36,13 @@ export const authOptions= {
 
       async authorize(credentials,req){
         console.log("I started")
+        console.log(credentials)
         let response = await fetch(`${process.env.NEXTAUTH_URL}api/register`, {
           method: "POST",
           body: JSON.stringify(credentials),
           headers: {"Content-Type":"application/json"}
         })
-
+        console.log(response)
         let user = await response.json()
 
         if(response.status == 422){
