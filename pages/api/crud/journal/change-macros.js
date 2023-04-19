@@ -16,7 +16,7 @@ export default async function handler(req,res){
         if(data){
             const updated =await Journal.updateOne({$and:[{email:email}]},
             {
-                $set:{"calorie_journal":calorie_journal}
+                $set:{"calorie_journal.0":calorie_journal[0]}
             },
             {
                 rawResult:true
@@ -39,7 +39,7 @@ export default async function handler(req,res){
             rawResult:true
         })
         if(pushed.modifiedCount == 1){
-            res.status(201).send("Created succesfully")
+            res.status(200).send("Created succesfully")
             return
         }
         res.status(403).send("Error")
