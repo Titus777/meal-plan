@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {useRouter} from 'next/router'
+import Image from "next/image"
 
 function WelcomeCard() {
   const [query,setQuery] = useState()
@@ -17,7 +18,7 @@ function WelcomeCard() {
     <div
       className="hero min-h-screen"
       style={{
-        backgroundImage: `../public/th-314201334.jpeg`,
+        backgroundImage: `url("/images/background.png")`,
       }}
     >
       <div className="hero-overlay bg-opacity-60"></div>
