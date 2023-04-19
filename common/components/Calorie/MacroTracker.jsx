@@ -2,44 +2,47 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 function MacroTracker({ user, journal }) {
-  const [today,setToday] = useState(new Date("04/13/2023"))
-  const [eatenMacros, setMacros] = useState({})
-  const [eatenCalorie, setCalories] = useState(0)
-  const [changes,setChanges] = useState(false)
-  let recommendedCalories;
-  console.log(journal)
-  console.log(user)
+  const [today, setToday] = useState(new Date("04/13/2023"));
+  const [eatenMacros, setMacros] = useState({});
+  const [eatenCalorie, setCalories] = useState(0);
+  const [changes, setChanges] = useState(false);
 
-  const calculateMacrosToday = () =>{
-    journal.calorie_journal[0].notes.forEach(note => {
-      console.log(today.toDateString(),note.date)
-      if(today.toDateString() == note.date){
-        let totalsFats = 0
-        let totalCarbs = 0
-        let totalProtein = 0
-        let totalCalories = 0
-        note.meals.forEach(meal =>{
-          console.log(totalCarbs,totalsFats,totalProtein)
-          totalCarbs += meal.percentCarbs
-          totalsFats += meal.percentfats
-          totalProtein += meal.percentprotein
-          totalCalories += parseInt(meal.percentcalories)
-        })
-        totalCarbs = (totalCarbs*4/user?.details[0]?.pref_intake)*100
-        totalsFats = (totalsFats*9/user?.details[0]?.pref_intake)*100
-        totalProtein = (totalProtein*4/user?.details[0]?.pref_intake)*100
-        console.log(totalCarbs, totalCalories,totalsFats)
-        setMacros({totalCarbs: Math.ceil(totalCarbs),totalsFats:Math.ceil(totalsFats),totalProtein:Math.ceil(totalProtein)})
-        setCalories(totalCalories)
+  const calculateMacrosToday = () => {
+    journal?.calorie_journal[0]?.notes.forEach((note) => {
+      console.log(today.toDateString(), note?.date);
+      if (today.toDateString() == note?.date) {
+        let totalsFats = 0;
+        let totalCarbs = 0;
+        let totalProtein = 0;
+        let totalCalories = 0;
+        note?.meals.forEach((meal) => {
+          console.log(totalCarbs, totalsFats, totalProtein);
+          totalCarbs += meal.percentCarbs;
+          totalsFats += meal.percentfats;
+          totalProtein += meal.percentprotein;
+          totalCalories += parseInt(meal.percentcalories);
+        });
+        totalCarbs = ((totalCarbs * 4) / user?.details[0]?.pref_intake) * 100;
+        totalsFats = ((totalsFats * 9) / user?.details[0]?.pref_intake) * 100;
+        totalProtein =
+          ((totalProtein * 4) / user?.details[0]?.pref_intake) * 100;
+        console.log(totalCarbs, totalCalories, totalsFats);
+        setMacros({
+          totalCarbs: Math.ceil(totalCarbs),
+          totalsFats: Math.ceil(totalsFats),
+          totalProtein: Math.ceil(totalProtein),
+        });
+        setCalories(totalCalories);
       }
     });
-     
-  }
-  useEffect(() =>{
-    calculateMacrosToday()
-  },[])
+  };
+  useEffect(() => {
+    calculateMacrosToday();
+  }, []);
 
-  const calories = Math.ceil((eatenCalorie / user?.details[0]?.pref_intake) * 100);
+  const calories = Math.ceil(
+    (eatenCalorie / user?.details[0]?.pref_intake) * 100
+  );
 
   return (
     <div className="flex h-fit bg-base-200 mx-4">
@@ -48,10 +51,12 @@ function MacroTracker({ user, journal }) {
           <div className="flex flex-col w-1/2">
             <div className="divider divider-vertical text-xl">Proteins</div>
             <div className="flex flex-row">
-              <div className="w-1/2">{eatenMacros?.totalProtein ? `${eatenMacros?.totalProtein}%` : "0%"}</div>
-              <div className="flex w-1/2 justify-end">
-                100%
+              <div className="w-1/2">
+                {eatenMacros?.totalProtein
+                  ? `${eatenMacros?.totalProtein}%`
+                  : "0%"}
               </div>
+              <div className="flex w-1/2 justify-end">100%</div>
             </div>
             <progress
               className="progress w-full h-2/3 my-2"
@@ -60,10 +65,10 @@ function MacroTracker({ user, journal }) {
             ></progress>
             <div className="divider divider-vertical text-xl">Fats</div>
             <div className="flex flex-row">
-              <div className="w-1/2">{eatenMacros?.totalsFats ? `${eatenMacros?.totalsFats}%` : "0%"}</div>
-              <div className="flex w-1/2 justify-end">
-                100%
+              <div className="w-1/2">
+                {eatenMacros?.totalsFats ? `${eatenMacros?.totalsFats}%` : "0%"}
               </div>
+              <div className="flex w-1/2 justify-end">100%</div>
             </div>
             <progress
               className="progress w-full h-2/3 my-2"
@@ -74,10 +79,10 @@ function MacroTracker({ user, journal }) {
               Carbohydrates
             </div>
             <div className="flex flex-row">
-              <div className="w-1/2">{eatenMacros?.totalCarbs ? `${eatenMacros?.totalCarbs}%` : "0%"}</div>
-              <div className="flex w-1/2 justify-end">
-                100%
+              <div className="w-1/2">
+                {eatenMacros?.totalCarbs ? `${eatenMacros?.totalCarbs}%` : "0%"}
               </div>
+              <div className="flex w-1/2 justify-end">100%</div>
             </div>
             <progress
               className="progress w-full h-2/3 my-2"
@@ -100,7 +105,10 @@ function MacroTracker({ user, journal }) {
         </div>
         <Link
           className="flex w-full btn justify-center items-center"
-          href={{pathname:"/singleForm/[type]",query:{type:"isJournal"}}}
+          href={{
+            pathname: "/singleForm/[type]",
+            query: { type: "isJournal" },
+          }}
         >
           {" "}
           Edit Journal

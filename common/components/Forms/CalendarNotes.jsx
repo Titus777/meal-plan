@@ -79,7 +79,7 @@ function CalendarNotes({ journal, date }) {
               className="textarea textarea-primary"
               onChange={(e) => setQuery(e.target.value)}
             ></textarea>
-            <input type="submit" value="Submit" className="btn btn-secondary" />
+            <input type="submit" value="Submit" className="btn btn-secondary" required/>
           </form>
         ) : (
           calorie_journal[0].notes.map((value, index) => {
