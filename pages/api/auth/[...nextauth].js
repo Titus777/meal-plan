@@ -47,11 +47,13 @@ export const authOptions= {
         let user = await response.json()
 
         if(response.status == 422){
-          response = await fetch(`${process.env.NEXTAUTH_URL}/api/login`,{
+          /*response = await fetch(`${process.env.NEXTAUTH_URL}/api/login`,{
             method:"POST",
             body: JSON.stringify(credentials),
             headers: {"Content-Type":"application/json"}
-          })
+          })*/
+
+          response = await fetch(`${process.env.NEXTAUTH_URL}/api/login?email=${credentials.email}&password=${credentials.password}`)
           user = await response.json()
         }
         if(response.ok && user){
