@@ -2,6 +2,8 @@ import NextAuth, { NextAuthOptions } from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import Auth0Provider from "next-auth/providers/auth0"
 import CredentialsProvider from "next-auth/providers/credentials";
+import dbConnect from "../../../lib/dbConnect";
+import User from "../../../common/model/User";
 // import AppleProvider from "next-auth/providers/apple"
 // import EmailProvider from "next-auth/providers/email"
 
@@ -36,32 +38,106 @@ export const authOptions= {
 
       async authorize(credentials,req){
         console.log("I started")
-        console.log(`${process.env.NEXTAUTH_URL}/api/register`)
-        let response = await fetch(`${process.env.NEXTAUTH_URL}/api/register`,{
-          method:"POST",
-          headers: {Accept: 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',},
-          body: JSON.stringify(credentials),
-        })
-        
-        let user = await response.json()
+        await dbConnect();
 
-        if(response.status == 422){
-          response = await fetch(`${process.env.NEXTAUTH_URL}/api/login`,{
-            method:"POST",
-            headers: {Accept: 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',},
-            body: JSON.stringify(credentials),
-          })
-          user = await response.json()
+        async function register(){
+          try{
+              if(!credentials){
+      
+                  return null
+              }
+          
+              const {email, password} = credentials
+          
+                  hash(password, 10, async function(err,hash){
+          
+                      const existingUser = await User.findOne({email})
+                      if(existingUser){
+                          return null
+                      }
+                      
+                      const user = new User({
+                          email: email,
+                          password: hash,
+                          
+                          details: [
+                              {first_name: "",
+                               last_name: "",
+                               activity: "",
+                               diet: "",
+                               exercise_time: 0,
+                               favorite_food: "",
+                               favorite_recipes:[ {} ] ,
+                               uploaded_recipes:[ {} ] ,
+                               goals: [""],
+                               sex: "",
+                               pref_intake:0,
+                               weight:0,
+                               height:0 
+                              }
+                          ],
+                          notes: [
+                              {dates: [],
+                              notes: [""],
+                              recipe_notes: [{}]}
+                              ],
+                          new: true,
+      
+                          created_at: new Date()
+                      })
+                      await user.save().catch(error => 
+                          {
+                              return null
+                              console.error(error)
+                          })
+                      if(!err){
+                          return user
+                          
+                      }else{
+                          return null
+                      }            
+                  })
+          }catch(e){
+              console.error(e)
+              return null
+          }
+         
         }
-        if(response.ok && user){
-          console.log("I will return user")
-          return user
-        }else{
-          return null
+        const register = register()
+        if(register == null){
+          try{
+            if(!credentials){
+                
+                return null
+            }
+        
+            const {email, password} = credentials
+                hash(password, 10, async function(err,hash){
+         
+                    
+                    const user = await User.findOne({email: email})
+    
+                    if(!user){
+                      
+                        return null;
+                    }
+                
+                    const isMatch = await compare(password, user.password);
+            
+                    if (!isMatch) {
+                      console.error("Is not match")
+                      return null;
+                    }
+                    
+                    return user
+                })
+       
+           
+        }catch(e){
+            return null
         }
-      }
+       
+        }}
     }),
     
     GoogleProvider({
