@@ -36,10 +36,10 @@ export const authOptions= {
 
       async authorize(credentials,req){
         console.log("I started")
-        console.log(credentials)
+        console.log(credentials[0])
         let response = await fetch(`${process.env.NEXTAUTH_URL}api/register`, {
           method: "POST",
-          body: JSON.stringify(credentials),
+          body: JSON.stringify(credentials[0]),
           headers: {"Content-Type":"application/json"}
         })
         console.log(response)
@@ -48,7 +48,7 @@ export const authOptions= {
         if(response.status == 422){
           response = await fetch(`${process.env.NEXTAUTH_URL}api/login`,{
             method:"POST",
-            body: JSON.stringify(credentials),
+            body: JSON.stringify(credentials[0]),
             headers: {"Content-Type":"application/json"}
           })
           user = await response.json()
