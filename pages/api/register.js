@@ -24,7 +24,7 @@ export default async function handler(req, res){
             res.status(404).end('Error')
             return
         }
-    
+        console.log(req)
         const {email, password} = req.body
         console.log(req.body)
         console.log(email, password)
