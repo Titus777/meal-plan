@@ -20,19 +20,19 @@ export default async function handler(req, res){
 
     await dbConnect();
     try{
-        if(!req.body){
+        if(!req.query){
             res.status(404).end('Error')
             return
         }
-        console.log(req)
-        const {email, password} = req.body
-        console.log(req.body)
-        console.log(email, password)
-        if(req.method === `POST`){
+        console.log(req.query)
+        const {email, password} = req.query
+        console.log(email)
+        if(req.method === `GET`){
             hash(password, 10, async function(err,hash){
     
                 const existingUser = await User.findOne({email})
                 if(existingUser){
+                    console.log(existingUser)
                     res.status(422).json({message: "Email already exists"})
                     return null
                 }
@@ -66,6 +66,7 @@ export default async function handler(req, res){
 
                     created_at: new Date()
                 })
+                console.log(user)
                 await user.save().catch(error => 
                     {
                         res.status(500).json({message: "Server error"})
