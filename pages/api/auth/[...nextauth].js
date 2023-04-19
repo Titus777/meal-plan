@@ -39,8 +39,8 @@ export const authOptions= {
         console.log(credentials.email)
         let response = await fetch(`${process.env.NEXTAUTH_URL}api/register`, {
           method: "POST",
+          headers: {"Content-Type":"application/json"},
           body: JSON.stringify({credentials}),
-          headers: {"Content-Type":"application/json"}
         })
         console.log(response)
         let user = await response.json()
@@ -48,8 +48,8 @@ export const authOptions= {
         if(response.status == 422){
           response = await fetch(`${process.env.NEXTAUTH_URL}api/login`,{
             method:"POST",
+            headers: {"Content-Type":"application/json"},
             body: JSON.stringify(credentials),
-            headers: {"Content-Type":"application/json"}
           })
           user = await response.json()
         }
