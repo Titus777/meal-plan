@@ -16,7 +16,12 @@ export default async function handler(req,res){
         if(data){
             const updated =await Journal.updateOne({$and:[{email:email}]},
             {
-                $set:{"calorie_journal.0":calorie_journal[0]}
+                 $set:{"calorie_journal.0":
+                {
+                    fats:calorie_journal[0].fats, 
+                    carbohydrates:calorie_journal[0].carbohydrates,
+                    protein:calorie_journal[0].protein
+                }}
             },
             {
                 rawResult:true
