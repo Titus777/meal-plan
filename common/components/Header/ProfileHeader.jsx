@@ -1,6 +1,6 @@
 import React from "react";
 import Link from 'next/link'
-
+import { signOut } from "next-auth/react";
 
 function ProfileHeader() {
   return (
@@ -14,7 +14,10 @@ function ProfileHeader() {
         Welcome back, User!
       </div>
       <div className="navbar-end">
-        <Link href="/logout" className="btn">Logout</Link>
+        <button onClick="signOut({
+      callbackUrl: `/`
+         })" 
+        className="btn">Logout</button>
       </div>
     </div>
   );
