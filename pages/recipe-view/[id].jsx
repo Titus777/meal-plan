@@ -29,26 +29,30 @@ function RecipeView() {
 
   const addMeal = async (e) => {
     e.preventDefault();
-    const mealToSend = [session?.user?.email, new Date(e?.target?.date?.value).toDateString(),{
-      name: recipe?.title,
-      protein: recipe?.nutrition?.nutrients[8]?.amount,
-      fats: recipe?.nutrition?.nutrients[1]?.amount,
-      carbohydrates: recipe?.nutrition?.nutrients[3]?.amount,
-      calories: recipe?.nutrition?.nutrients[0]?.amount,
-      id:router?.query?.id,
-      image: recipe?.image
-    }];
-    console.log(mealToSend)
-    try{
-      const res = await fetch("/api/crud/journal/edit-meals",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify(mealToSend)
-      })
-      alert(await res.json())
-      console.log(await res.json())
-    }catch(e){
-      console.log(e)
+    if(session?.user?.email){
+      const mealToSend = [session?.user?.email, new Date(e?.target?.date?.value).toDateString(),{
+        name: recipe?.title,
+        protein: recipe?.nutrition?.nutrients[8]?.amount,
+        fats: recipe?.nutrition?.nutrients[1]?.amount,
+        carbohydrates: recipe?.nutrition?.nutrients[3]?.amount,
+        calories: recipe?.nutrition?.nutrients[0]?.amount,
+        id:router?.query?.id,
+        image: recipe?.image
+      }];
+      console.log(mealToSend)
+      try{
+        const res = await fetch("/api/crud/journal/edit-meals",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body: JSON.stringify(mealToSend)
+        })
+        alert(await res.json())
+        console.log(await res.json())
+      }catch(e){
+        console.log(e)
+      }
+    }else{
+      alert("You must be logged in to add to the calendar")
     }
   };
   console.log(recipe);
@@ -66,6 +70,34 @@ function RecipeView() {
           <Header />
           <input type="checkbox" id="my-modal-5" className="modal-toggle" />
           <div className="modal">
+            {session?.user ? (
+              <form onSubmit={addMeal} className="modal-box">
+                <p className="py-4">
+                  Please add the recipe to the date of when you want it to be
+                  eaten.
+                </p>
+                <label htmlFor="date"> Date </label>
+                <input
+                  type="date"
+                  name="date"
+                  className="border-4 border-red-200"
+                />
+
+                <div className="modal-action">
+                  <input
+                    htmlFor="my-modal-5"
+                    type="submit"
+                    value="ADD"
+                    className="btn"
+                  />
+                  <label htmlFor="my-modal-5" className="btn">
+                    Close
+                  </label>
+                </div>
+              </form>
+            ) : (
+              <div> YOU ARE NOT LOGGED IN </div>
+            )}
             <form onSubmit={addMeal} className="modal-box">
               <p className="py-4">
                 Please add the recipe to the date of when you want it to be
