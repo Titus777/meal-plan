@@ -24,9 +24,9 @@ export default async function handler(req, res){
             res.status(404).end('Error')
             return
         }
-        console.log(req.query)
+
         const {email, password} = req.query
-        console.log(email)
+
         if(req.method === `GET`){
             hash(password, 10, async function(err,hash){
     
