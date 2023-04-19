@@ -98,30 +98,7 @@ function RecipeView() {
             ) : (
               <div> YOU ARE NOT LOGGED IN </div>
             )}
-            <form onSubmit={addMeal} className="modal-box">
-              <p className="py-4">
-                Please add the recipe to the date of when you want it to be
-                eaten.
-              </p>
-              <label htmlFor="date"> Date </label>
-              <input
-                type="date"
-                name="date"
-                className="border-4 border-red-200"
-              />
-
-              <div className="modal-action">
-                <input
-                  htmlFor="my-modal-5"
-                  type="submit"
-                  value="ADD"
-                  className="btn"
-                />
-                <label htmlFor="my-modal-5" className="btn">
-                  Close
-                </label>
-              </div>
-            </form>
+            
           </div>
           <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col lg:flex-col-reverse w-9/12">
