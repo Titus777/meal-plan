@@ -36,7 +36,7 @@ export const authOptions= {
 
       async authorize(credentials,req){
         console.log("I started")
-        console.log(credentials)
+        console.log(credentials.email)
         let response = await fetch(`${process.env.NEXTAUTH_URL}api/register`, {
           method: "POST",
           body: JSON.stringify(credentials),
