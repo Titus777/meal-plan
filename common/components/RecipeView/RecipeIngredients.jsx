@@ -25,7 +25,7 @@ function RecipeIngredients({recipe}) {
     <div id="cooking" className="flex flex-row min-h-screen bg-base-primary">
       <div className="card lg:card-side bg-green-300 shadow-xl w-1/2">
         <div className="card-body">
-          <h2 className="card-title">Instructions: Listen them if they are present!</h2>
+          <h2 className="card-title">Instructions: Listen to them if they are present!</h2>
           <div className="card-actions text-2xl">
             {recipe?.analyzedInstructions ?  
             <Speech
