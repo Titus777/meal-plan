@@ -14,14 +14,13 @@ function JournalForm(props) {
     let fats = event.target.first_name.value;
     let carbohydrates = event.target.surname.value;
     let protein = event.target.fav_activity.value;
-    let number_of_meals = event.target.cal_intake.value;
     const sendDetails = {
       email: session?.user?.email,
-      calorie_journal: [{ fats, carbohydrates, protein, number_of_meals }],
+      calorie_journal: [{ fats, carbohydrates, protein }],
     };
 
     console.log(fats)
-    if (parseInt(fats) + parseInt(carbohydrates) + parseInt(protein) == 100) {
+   if (parseInt(fats) + parseInt(carbohydrates) + parseInt(protein) == 100) {
 
       if(props?.isUpdating){
         const toSend = {email:session?.email,details:sendDetails}
@@ -50,6 +49,8 @@ function JournalForm(props) {
           }
         }
       }
+    }else{
+      alert("The macros must add up to 100")
     }
   }
 
@@ -103,22 +104,6 @@ function JournalForm(props) {
                 />
               </div>
 
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">
-                    Number of meals (max of 3 per day)
-                  </span>
-                </label>
-                <input
-                  type="number"
-                  min={1}
-                  max={3}
-                  placeholder="2"
-                  className="input input-bordered"
-                  name="cal_intake"
-                  required
-                />
-              </div>
             </div>
             <input
               type="submit"
