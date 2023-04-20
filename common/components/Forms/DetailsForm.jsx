@@ -75,7 +75,7 @@ function DetailsForm(props) {
               />
               <div className="form-control">
                 <label className="label">
-                  <span className="label-text">Favorite Activity</span>
+                  <span className="label-text">Favourite Activity</span>
                 </label>
                 <input
                   type="text"
@@ -88,7 +88,7 @@ function DetailsForm(props) {
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">
-                    Favorite food (please write the ingredients like in the
+                    Favourite food (please write the ingredients like in the
                     example below)
                   </span>
                 </label>
