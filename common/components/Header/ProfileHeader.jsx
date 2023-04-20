@@ -14,7 +14,7 @@ function ProfileHeader() {
         Welcome back, User!
       </div>
       <div className="navbar-end">
-        <button onClick={signOut({
+        <button onClick={()=>signOut({
       callbackUrl: `/`
          })}
         className="btn">Logout</button>
