@@ -47,7 +47,7 @@ export default async function handler(req,res){
 
         const pushed = await Journal.updateOne({email:req.body[0]},
         {
-            $set:{"calorie_journal.0.notes":update}
+            $push:{"calorie_journal.0.notes":update}
         },
         {
             runValidators:true,
