@@ -54,6 +54,7 @@ export default async function handler(req, res){
                 })
         
                 if(!err){
+                    await user.save()
                     res.status(201).json(user)
                     
                 }else{
