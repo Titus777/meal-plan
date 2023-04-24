@@ -14,6 +14,7 @@ export default async function handler(req,res){
         const response = await User.findOneAndUpdate({email: email[0]},{new:false},{rawResults:true})
      
         if(response){
+            await response.save()
             res.status(200).json(response)
             return
         }else{

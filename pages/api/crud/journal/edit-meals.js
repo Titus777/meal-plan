@@ -37,6 +37,7 @@ export default async function handler(req,res){
                     new:true,
                 })
             if(pushed.modifiedCount == 1){
+                await pushed.save()
                 res.status(201).send("Created succesfully")
                 return
             }else{
@@ -54,7 +55,7 @@ export default async function handler(req,res){
             new:true
         })
         if(pushed.modifiedCount == 1){
-
+            await pushed.save()
             res.status(201).send("Created succesfully")
             return
         }

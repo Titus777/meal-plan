@@ -20,6 +20,7 @@ export default async function handler(req,res){
         )
 
         if(data.modifiedCount == 1){
+            await data.save()
             res.status(200).send("success")
             return
         }

@@ -25,6 +25,7 @@ export default async function handler(req,res){
             }
             )
             if(updated.modifiedCount == 1){
+                await updated.save()
                 res.status(200).send("ok")
                 return
             }
@@ -41,6 +42,7 @@ export default async function handler(req,res){
             rawResult:true
         })
         if(pushed.modifiedCount == 1){
+            await pushed.save()
             res.status(200).send("Created succesfully")
             return
         }

@@ -30,12 +30,7 @@ export default async function handler(req,res){
             ]
 
         })
-        await journal.save().catch(error => 
-            {
-                res.status(500).json({message: "Server error"})
-                console.error(error)
-                return
-            })
+        await journal.save()
         if(journal){
             console.log("success")
             res.status(200).json(journal)
