@@ -40,9 +40,9 @@ function DetailsForm(props) {
       body: JSON.stringify(sendDetails)
     })
 
-    if(res.status==200){
-      props.setDetailsStatus(true)
-    }
+    
+    props.setDetailsStatus(true)
+    
   }
 
   return (
