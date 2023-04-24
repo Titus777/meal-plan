@@ -1,20 +1,6 @@
-import jwt from 'jsonwebtoken'
 import User from '../../common/model/User';
 import dbConnect from '../../lib/dbConnect'
 import {hash} from "bcrypt"
-import {setCookie} from "cookies-next"
-
-const authenthicated = (fn) => async(req,res) =>
-{
-    // wrap function this(async function) to protect function from someone who is not authenticated
-    jwt.verify(req.headers.authorization, process.env.KEY,async function(err,decoded){
-        if(!err && decoded){
-            return await fn(req,res)
-        }
-        res.status(500).json({message:'Sorry you are not authenticated'})
-    })
- 
-}
 
 export default async function handler(req, res){
 
@@ -66,12 +52,7 @@ export default async function handler(req, res){
 
                     created_at: new Date()
                 })
-                console.log(user)
-                await user.save().catch(error => 
-                    {
-                        res.status(500).json({message: "Server error"})
-                        console.error(error)
-                    })
+        
                 if(!err){
                     res.status(201).json(user)
                     
