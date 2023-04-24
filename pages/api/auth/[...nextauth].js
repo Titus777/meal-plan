@@ -58,6 +58,7 @@ export const authOptions= {
         }
         if(response.ok && user){
           console.log("I will return user")
+          console.log(user)
           return user
         }else{
           return null
